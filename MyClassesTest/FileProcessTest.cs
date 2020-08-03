@@ -30,10 +30,28 @@ namespace MyClassesTest {
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void FileNameNullOrEmpty_throwsArgumentNullException() { //Nome do meu arquivo nulo ou nao existe
 
-            //Todo
-            Assert.Inconclusive();
+            //Instancia um objeto fp de FileProcess
+            FileProcess fp = new FileProcess();
+
+            fp.FileExists("");
+        }
+
+        [TestMethod]
+        public void FileNameNullOrEmpty_throwsArgumentNullException_UsingTryCatch() { //Nome do meu arquivo nulo ou nao existe
+
+            //Instancia um objeto fp de FileProcess
+            FileProcess fp = new FileProcess();
+
+            try {
+                fp.FileExists("");
+            } catch (ArgumentException) {
+
+                return;
+            }
+            Assert.Fail("Erro esperada");
         }
     }
 }
