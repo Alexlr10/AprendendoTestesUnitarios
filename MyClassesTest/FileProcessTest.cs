@@ -35,6 +35,10 @@ namespace MyClassesTest {
         #endregion
 
         [TestMethod]
+        [Description("Verificando se o arquivo existe")]
+        [Owner("Alex Lopes")]
+        [Priority(0)]
+        [TestCategory("Nenhuma Excessao")]
         public void FileNameDoesExists() { //Nome do meu arquivo existe
 
             //Instancia um objeto fp de FileProcess
@@ -58,8 +62,17 @@ namespace MyClassesTest {
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
             }
         }
+        [TestMethod]
+        [Timeout(3100)]
+        public void SimulateTimeOut() {
+            System.Threading.Thread.Sleep(3000);
+        }
 
         [TestMethod]
+        [Description("Verificando se o arquivo não existe")]
+        [Owner("Alex Lopes")]
+        [Priority(1)]
+        [TestCategory("Nenhuma Excessao")]
         public void FileNameDoesNotExists() { //Nome do meu arquivo nao existe
 
             //Instancia um objeto fp de FileProcess
@@ -73,6 +86,9 @@ namespace MyClassesTest {
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
+        [Owner("Alex Lopes")]
+        [Priority(0)]
+        [TestCategory("Excessao")]
         public void FileNameNullOrEmpty_throwsArgumentNullException() { //Nome do meu arquivo nulo ou nao existe
 
             //Instancia um objeto fp de FileProcess
@@ -82,6 +98,8 @@ namespace MyClassesTest {
         }
 
         [TestMethod]
+        [Priority(1)]
+        [TestCategory("Excessao")]
         public void FileNameNullOrEmpty_throwsArgumentNullException_UsingTryCatch() { //Nome do meu arquivo nulo ou nao existe
 
             //Instancia um objeto fp de FileProcess
