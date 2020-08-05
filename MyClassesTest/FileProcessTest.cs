@@ -9,20 +9,42 @@ namespace MyClassesTest {
     public class FileProcessTest {
         private const string BAD_FILE_NAME = @"C:\BadFileName.bat";
         private string _GoodFileName;
+
+        public TestContext TestContext { get; set; }
+
+        #region Test Initialize e Cleanup
+        [TestInitialize]
+        public void TestInitialize() {
+            if (TestContext.TestName == "FileNameDoesExists") {
+                SetGoodFileName();
+                if (!string.IsNullOrEmpty(_GoodFileName)) {           
+                    TestContext.WriteLine($"Criando arquivo: {_GoodFileName}");
+                    File.AppendAllText(_GoodFileName, "Some text");
+                }
+            }
+        }
+        [TestCleanup]
+        public void TestCleanup() {
+            if (TestContext.TestName == "FileNameDoesExists") {
+                if (!string.IsNullOrEmpty(_GoodFileName)) {
+                    TestContext.WriteLine($"Deletando arquivo: {_GoodFileName}");
+                    File.Delete(_GoodFileName);
+                }
+            }
+        }
+        #endregion
+
         [TestMethod]
         public void FileNameDoesExists() { //Nome do meu arquivo existe
 
             //Instancia um objeto fp de FileProcess
             FileProcess fp = new FileProcess();
             bool fromCall;
-            SetGoodFileName();
-            File.AppendAllText(_GoodFileName, "Some text");
-
             //Verifica se existe ou nao o arquivo no diretorio passado
             fromCall = fp.FileExists(_GoodFileName);
-            File.Delete(_GoodFileName);
+            TestContext.WriteLine($"Testando arquivo: {_GoodFileName}");      
 
-           //Verifica se o arquivo e True ou False
+            //Verifica se o arquivo e True ou False
             Assert.IsTrue(fromCall);
         }
 
