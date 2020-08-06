@@ -62,6 +62,26 @@ namespace MyClassesTest {
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
             }
         }
+
+        private const string FILE_NAME = @"FileToDeploy.txt";
+
+        [TestMethod]
+        [Owner("Alex")]
+        [DeploymentItem(FILE_NAME)]
+        public void FileNameDoesExistsUsingDeploymentItem() {
+            //Instancia um objeto fp de FileProcess
+            FileProcess fp = new FileProcess();
+            string fileName;
+            bool fromCall;
+
+            fileName = $@"{TestContext.DeploymentDirectory}\{FILE_NAME}";
+            TestContext.WriteLine($"Verificando arquivo: {fileName}");
+
+            fromCall = fp.FileExists(fileName);
+            //Verifica se o arquivo e True ou False
+            Assert.IsTrue(fromCall);
+        }
+
         [TestMethod]
         [Timeout(3100)]
         public void SimulateTimeOut() {
